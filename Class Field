@@ -1,0 +1,107 @@
+
+namespace TanksOne
+{
+    class Field
+    {
+        private int maxx, maxy;
+        public char[,] field;
+        private int[,] obstacles;
+        private char[] obstacle;
+        private int obstaclenum;
+
+        public Field (int x,int y)
+        {
+            this.field = new char[x, y];
+            this.maxx = x;
+            this.maxy = y;
+            this.obstacles = new int[x * y,2];
+            this.obstacle = new char[x * y];
+            this.obstaclenum = 0;
+            ClearUp();
+        }
+
+        public void CreateField()
+        {
+            
+            for (int i=1;i<this.maxx+2;i++)
+            {
+                Console.Write("==");
+            }
+            
+            Console.WriteLine();
+            for (int i=0;i<this.maxx;i++)
+            {
+                Console.Write('│');
+                for (int j=0;j<this.maxy;j++)
+                {
+                    Console.Write(this.field[i, j]);
+                    Console.Write(' ');
+                }
+                Console.Write('│');
+                Console.WriteLine();
+            }
+            
+            for (int i=0;i<this.maxx;i++)
+            {
+                Console.Write("==");
+            }
+         
+        }
+
+        public void ClearUp()
+        {
+            for (int i = 0; i < this.maxx; i++)
+            {
+                for (int j = 0; j < this.maxy; j++)
+                {
+                    this.field[i, j] = ' ';
+                }
+            }
+            this.WriteObstacles();
+        }
+
+        public bool PossibleToMove(int x, int y)
+        {
+            if ((x < this.maxx) && (x >= 0) && (y < this.maxy) && (y >= 0))
+            {
+                if ((this.field[x, y] == ' '))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void CreateObstacle (int x,int y)
+        {
+            if (this.PossibleToMove(x,y))
+            {
+                char o = '■';
+                int n = this.obstaclenum;
+                this.obstacles[n, 0] = x;
+                this.obstacles[n, 1] = y;
+                this.obstacle[n] = o;
+                this.obstaclenum++;
+                this.field[x, y] = o;
+            }
+        }
+
+        public void WriteObstacles()
+        {
+            int n = this.obstaclenum;
+            for (int i=0;i<n;i++)
+            {
+                int x = this.obstacles[i, 0];
+                int y = this.obstacles[i, 1];
+                this.field[x, y] = this.obstacle[i];
+            }
+        }
+    }
+}
