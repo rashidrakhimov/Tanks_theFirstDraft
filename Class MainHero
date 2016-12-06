@@ -1,0 +1,37 @@
+namespace TanksOne
+{
+    class MainHero
+    {
+        private int x, y;
+        private int x1;
+        private int y1;
+
+        public MainHero (int x, int y, int speedx,int speedy)
+        {
+            this.x = x;
+            this.y = y;
+            this.x1 = speedx;
+            this.y1 = speedy;
+        }
+
+        public void SetSteps(int speedx, int speedy)
+        {
+            this.x1 = speedx;
+            this.y1 = speedy;
+        }
+
+        public void WriteDown(Field f)
+        {
+            f.field[this.x, this.y] = '#';
+        }
+
+        public void Movement(Field f)
+        {
+            if (f.PossibleToMove(this.x+this.x1,this.y+this.y1))
+            {
+                this.x += this.x1;
+                this.y += this.y1;
+            }
+        }
+    }
+}
